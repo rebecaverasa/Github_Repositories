@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Form, FormControl } from 'react-bootstrap';
-
-const SearchBar = ({ handleSearch }) => {
+const SearchBar = () => {
     return (
-        <Form>
-            <FormControl type='text' placeholder='Search' onChange={(e) => handleSearch(e.target.value)} />
-        </Form>
+        <form>
+            <input type="text" placeholder="pesquise" />
+            <button />
+        </form>
     );
 };
 

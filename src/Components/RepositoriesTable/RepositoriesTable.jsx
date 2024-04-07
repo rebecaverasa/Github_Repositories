@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
-import { Table } from 'react-bootstrap'
-
-const RepositoriesTable = ({ repositories, handleRowClick}) => {
+const RepositoriesTable = () => {
     return (
-        <Table striped bordered hover> 
+        <table>
             <thead>
                 <tr>
                     <th>Nome do Repositorio</th>
@@ -12,15 +10,13 @@ const RepositoriesTable = ({ repositories, handleRowClick}) => {
                 </tr>
             </thead>
             <tbody>
-                {repositories.map((repo) => (
-                    <tr key={repo.id} onClick={() => handleRowClick(repo)}>
-                        <td>{repo.nome}</td>
-                        <td>{repo.proprietario}</td>
-                        <td>{repo.descricao}</td>
-                    </tr>
-                ))}
+                <tr>
+                    <td>Site de alguma coisa</td>
+                    <td>Joao</td>
+                    <td>descricao aqui blablabla</td>
+                </tr>
             </tbody>
-        </Table>
+        </table>
     );
 };
 
