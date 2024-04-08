@@ -1,7 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const TableContainer = styled.div`
     padding: 0 200px;
@@ -46,9 +47,11 @@ const CenteredCell = styled(TableCell)`
     color: #808080;
 `;
 
-const RepositoriesTable = ({ repositories }) => {
-
+const RepositoriesTable = () => {
+const {repositories} = useSelector(state => state)
+    
     return (
+        
         <TableContainer>
             <Table>
                 <TableHead>
@@ -69,7 +72,7 @@ const RepositoriesTable = ({ repositories }) => {
                         ))
                     ) : (
                         <TableRow>
-                            <CenteredCell colSpan="3">Nenhum repositório encontrado</CenteredCell>
+                            <CenteredCell colSpan="3">Nenhum repositório</CenteredCell>
                         </TableRow>
                     )}
                 </tbody>

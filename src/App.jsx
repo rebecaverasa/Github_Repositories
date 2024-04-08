@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import Header from "./Components/Header/Header"
 import SearchBar from "./Components/SearchBar/SearchBar";
-import RepositoriesTable from "./Components/RepositoriesTable/RepositoriesTable";
+import RepositoriesTable from './Components/RepositoriesTable/RepositoriesTable';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,6 +17,7 @@ const App = () => {
       <GlobalStyle />
       <Header />
       <SearchBar />
+      <RepositoriesTable />
     </div>
   );
 };

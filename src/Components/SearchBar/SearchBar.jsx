@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 import { useLazyQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../../Graphql/queries';
 import { setRepositories } from '../../redux/actions';
-import RepositoriesTable from '../RepositoriesTable/RepositoriesTable';
 
 const SearchContainer = styled.div`
     padding: 0 200px;
@@ -51,28 +50,18 @@ const SearchBar = () => {
             dispatch(setRepositories(data.search.nodes));
         }
     }, [data, dispatch]);
-
-    const handleSearch = () => {
+    
+    const handleSearch = (e) => {
+        e.preventDefault()
         searchRepositories({ variables: { query: searchTerm } });
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    };
-
-    console.log(data);
-
     return (
         <SearchContainer>
-            <Form>
-                <Input type="text" placeholder="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onKeyPress={handleKeyPress} />
-                <Button onClick={handleSearch} disabled={loading}>Buscar</Button>
+            <Form onSubmit={handleSearch}>
+                <Input type="text" placeholder="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                <Button type="submit" onClick={handleSearch} disabled={loading}>Buscar</Button>
             </Form>
-            {data && data.search && data.search.nodes && (
-            <RepositoriesTable repositories={data.search.nodes} />
-            )}
         </SearchContainer>
     );
 };
