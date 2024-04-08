@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { openModal } from '../../redux/actions';
 
 const TableContainer = styled.div`
     padding: 0 200px;
@@ -47,11 +48,22 @@ const CenteredCell = styled(TableCell)`
     color: #808080;
 `;
 
+const TableRowClickable = styled.tr`
+  cursor: pointer;
+  &:hover {
+    background-color: #ffffcc;
+  }
+`;
+
 const RepositoriesTable = () => {
-const {repositories} = useSelector(state => state)
-    
+    const { repositories } = useSelector(state => state)
+    const dispatch = useDispatch();
+    const handleRowClick = (repo) => {
+        dispatch(openModal(repo));
+    };
+
     return (
-        
+
         <TableContainer>
             <Table>
                 <TableHead>
@@ -63,12 +75,12 @@ const {repositories} = useSelector(state => state)
                 </TableHead>
                 <tbody>
                     {repositories.length > 0 ? (
-                        repositories.map(repo => (
-                            <TableRow key={repo.name}>
+                        repositories.map((repo, index) => (
+                            <TableRowClickable key={repo.name} onClick={() => handleRowClick(index)}>
                                 <TableCell>{repo.name}</TableCell>
                                 <TableCell>{repo.owner.login}</TableCell>
                                 <TableCell>{repo.description}</TableCell>
-                            </TableRow>
+                            </TableRowClickable>
                         ))
                     ) : (
                         <TableRow>
