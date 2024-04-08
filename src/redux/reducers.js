@@ -1,4 +1,4 @@
-import { SET_REPOSITORIES, OPEN_MODAL, CLOSE_MODAL } from "./actions";
+import { SET_REPOSITORIES, TOGGLE_MODAL } from "./actions";
 
 const initialState = {
   repositories: [],
@@ -13,17 +13,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         repositories: action.payload,
       };
-    case OPEN_MODAL:
+    case TOGGLE_MODAL:
       return {
         ...state,
-        modalVisible: true,
+        modalVisible: !state.modalVisible,
         modalData: action.payload,
-      };
-    case CLOSE_MODAL:
-      return {
-        ...state,
-        modalVisible: false,
-        modalData: {},
       };
     default:
       return state;

@@ -1,9 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { openModal } from '../../redux/actions';
+import { toggleModal } from '../../redux/actions';
 
 const TableContainer = styled.div`
     padding: 0 200px;
@@ -51,7 +50,7 @@ const CenteredCell = styled(TableCell)`
 const TableRowClickable = styled.tr`
   cursor: pointer;
   &:hover {
-    background-color: #ffffcc;
+    background-color: #F1FA8C;
   }
 `;
 
@@ -59,11 +58,10 @@ const RepositoriesTable = () => {
     const { repositories } = useSelector(state => state)
     const dispatch = useDispatch();
     const handleRowClick = (repo) => {
-        dispatch(openModal(repo));
+        dispatch(toggleModal(repo));
     };
 
     return (
-
         <TableContainer>
             <Table>
                 <TableHead>
@@ -75,8 +73,8 @@ const RepositoriesTable = () => {
                 </TableHead>
                 <tbody>
                     {repositories.length > 0 ? (
-                        repositories.map((repo, index) => (
-                            <TableRowClickable key={repo.name} onClick={() => handleRowClick(index)}>
+                        repositories.map((repo) => (
+                            <TableRowClickable key={repo.name} onClick={() => handleRowClick(repo)}>
                                 <TableCell>{repo.name}</TableCell>
                                 <TableCell>{repo.owner.login}</TableCell>
                                 <TableCell>{repo.description}</TableCell>
@@ -91,10 +89,6 @@ const RepositoriesTable = () => {
             </Table>
         </TableContainer>
     );
-};
-
-RepositoriesTable.propTypes = {
-    repositories: PropTypes.array.isRequired
 };
 
 export default RepositoriesTable;

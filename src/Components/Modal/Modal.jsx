@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal } from '../redux/actions';
+import { toggleModal } from '../../redux/actions';
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -18,6 +18,7 @@ const ModalContent = styled.div`
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+  position: relative;
 `;
 
 const CloseButton = styled.button`
@@ -31,21 +32,20 @@ const CloseButton = styled.button`
 
 const Modal = () => {
   const dispatch = useDispatch();
-  const { modalVisible, modalData } = useSelector((state) => state.modal);
-
-  const handleCloseModal = () => {
-    dispatch(closeModal());
+  const { modalVisible, modalData } = useSelector((state) => state);
+  const handleToggleModal = () => {
+    dispatch(toggleModal());
   };
 
   return (
     modalVisible && (
       <ModalBackdrop>
         <ModalContent>
-          <CloseButton onClick={handleCloseModal}>Fechar</CloseButton>
+          <CloseButton onClick={handleToggleModal}>Fechar</CloseButton>
           {/* Aqui você pode renderizar o conteúdo do modal usando os dados recebidos do estado */}
           <h2>Detalhes do Repositório</h2>
           <p>Nome: {modalData.name}</p>
-          <p>Proprietário: {modalData.owner}</p>
+          <p>Proprietário: {modalData.owner.login}</p>
           <p>Descrição: {modalData.description}</p>
         </ModalContent>
       </ModalBackdrop>
