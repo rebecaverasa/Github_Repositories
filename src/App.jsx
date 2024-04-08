@@ -17,7 +17,6 @@ const App = () => {
       <GlobalStyle />
       <Header />
       <SearchBar />
-      <RepositoriesTable />
     </div>
   );
 };
