@@ -72,8 +72,8 @@ const Button = styled.button`
 const PageSize = 10;
 
 const RepositoriesTable = () => {
-    const { repositories } = useSelector((state) => state);
     const dispatch = useDispatch();
+    const { repositories } = useSelector((state) => state);
     const [currentPage, setCurrentPage] = useState(1);
 
     const handleRowClick = (repo) => {

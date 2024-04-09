@@ -79,7 +79,6 @@ const Modal = () => {
       <ModalBackdrop>
         <ModalContent>
           <CloseButton onClick={handleToggleModal}>Fechar</CloseButton>
-          {/* Aqui você pode renderizar o conteúdo do modal usando os dados recebidos do estado */}
           <TitleBackground>
             <Title>Detalhes do Repositório</Title>
           </TitleBackground>
