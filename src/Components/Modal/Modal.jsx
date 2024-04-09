@@ -31,26 +31,36 @@ const CloseButton = styled.button`
 `;
 
 const Modal = () => {
-  const dispatch = useDispatch();
-  const { modalVisible, modalData } = useSelector((state) => state);
-  const handleToggleModal = () => {
-    dispatch(toggleModal());
-  };
+    const dispatch = useDispatch();
+    const { modalVisible, modalData } = useSelector((state) => state);
+    const handleToggleModal = () => {
+        dispatch(toggleModal());
+    };
 
-  return (
-    modalVisible && (
-      <ModalBackdrop>
-        <ModalContent>
-          <CloseButton onClick={handleToggleModal}>Fechar</CloseButton>
-          {/* Aqui você pode renderizar o conteúdo do modal usando os dados recebidos do estado */}
-          <h2>Detalhes do Repositório</h2>
-          <p>Nome: {modalData.name}</p>
-          <p>Proprietário: {modalData.owner.login}</p>
-          <p>Descrição: {modalData.description}</p>
-        </ModalContent>
-      </ModalBackdrop>
-    )
-  );
+    return (
+        modalVisible && (
+            <ModalBackdrop>
+                <ModalContent>
+                    <CloseButton onClick={handleToggleModal}>Fechar</CloseButton>
+                    {/* Aqui você pode renderizar o conteúdo do modal usando os dados recebidos do estado */}
+                    <h3>Detalhes do Repositório</h3>
+                    <p>Nome: {modalData.name}</p>
+                    <p>Proprietário: {modalData.owner.login}</p>
+                    <p>Descrição: {modalData.description}</p>
+                    <p>Contagem de estrelas: {modalData.stargazerCount}</p>
+                    <p>Url: {modalData.url}</p>
+                    <p>Estatísticas de Commits: {modalData.defaultBranchRef.target.history.edges.map(edge => (
+                        <li key={edge.node.changedFiles}>
+                            {`${edge.node.changedFiles} arquivos alterados, ${edge.node.additions} adições, ${edge.node.deletions} deleções`}
+                        </li>
+                    ))}
+                    </p>
+                    <p>Issues Abertas: {modalData.labels}</p>
+                    <p>Pull Requests: {modalData.CommitHistoryConnection}</p>
+                </ModalContent>
+            </ModalBackdrop>
+        )
+    );
 };
 
 export default Modal;
