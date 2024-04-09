@@ -55,7 +55,13 @@ const Modal = () => {
                         </li>
                     ))}
                     </p>
-                    <p>Issues Abertas: {modalData.labels}</p>
+                    <p>Últimas 3 Issues:
+                        {modalData.issues.edges.map(edge => (
+                            <li key={edge.node.number}>
+                                {`${edge.node.number}: ${edge.node.title}`}
+                            </li>
+                        ))}
+                    </p>
                     <p>Pull Requests: {modalData.CommitHistoryConnection}</p>
                 </ModalContent>
             </ModalBackdrop>

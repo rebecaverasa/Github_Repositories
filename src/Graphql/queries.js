@@ -12,6 +12,14 @@ export const GET_REPOSITORIES = gql`
           description
           stargazerCount
           url
+          issues(last: 3) {
+            edges {
+              node {
+                number
+                title
+              }
+            }
+          }
           defaultBranchRef {
             target {
               ... on Commit {
