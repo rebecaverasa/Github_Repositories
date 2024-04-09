@@ -42,7 +42,7 @@ const Button = styled.button`
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchRepositories, { loading, data }] = useLazyQuery(GET_REPOSITORIES);
+    const [searchRepositories, { data }] = useLazyQuery(GET_REPOSITORIES);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const SearchBar = () => {
         <SearchContainer>
             <Form onSubmit={handleSearch}>
                 <Input type="text" placeholder="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                <Button type="submit" onClick={handleSearch} disabled={loading}>Buscar</Button>
+                <Button type="submit" onClick={handleSearch} >Buscar</Button>
             </Form>
         </SearchContainer>
     );
