@@ -20,6 +20,21 @@ export const GET_REPOSITORIES = gql`
               }
             }
           }
+          pullRequests(last: 3) {
+            edges {
+              node {
+                url
+                title
+                createdAt
+                repository {
+                  id
+                }
+                author {
+                  login
+                }
+              }
+            }
+          }
           defaultBranchRef {
             target {
               ... on Commit {

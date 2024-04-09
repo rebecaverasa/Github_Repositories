@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleModal } from '../../redux/actions';
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "../../redux/actions";
 
 const ModalBackdrop = styled.div`
   position: fixed;
@@ -15,58 +15,129 @@ const ModalBackdrop = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
+  background-color: #f8f8f2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 45px;
+  border-radius: 10px;
   position: relative;
+  margin: 50px;
 `;
 
 const CloseButton = styled.button`
+  background-color: #6272a4;
+  color: #fff;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
   border: none;
-  cursor: pointer;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+        background-color: #F1FA8C;
+        color: black;
+    }
+  top: 10px;
+  right: 14px;
+  padding: 6px;
+`;
+
+const Title = styled.h3`
+  margin: 0;
+  color: #282a36;
+`;
+
+const TitleBackground = styled.div`
+  text-align: center;
+  background-color: #ddd;
+  padding: 17px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+`;
+
+const TituloNegrito = styled.strong`
+  color: #282a36;
+  font-weight: bold;
+  padding: 7px;
+`;
+
+const StyledLink = styled.a`
+  color: #007bff;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Modal = () => {
-    const dispatch = useDispatch();
-    const { modalVisible, modalData } = useSelector((state) => state);
-    const handleToggleModal = () => {
-        dispatch(toggleModal());
-    };
+  const dispatch = useDispatch();
+  const { modalVisible, modalData } = useSelector((state) => state);
+  const handleToggleModal = () => {
+    dispatch(toggleModal());
+  };
 
-    return (
-        modalVisible && (
-            <ModalBackdrop>
-                <ModalContent>
-                    <CloseButton onClick={handleToggleModal}>Fechar</CloseButton>
-                    {/* Aqui você pode renderizar o conteúdo do modal usando os dados recebidos do estado */}
-                    <h3>Detalhes do Repositório</h3>
-                    <p>Nome: {modalData.name}</p>
-                    <p>Proprietário: {modalData.owner.login}</p>
-                    <p>Descrição: {modalData.description}</p>
-                    <p>Contagem de estrelas: {modalData.stargazerCount}</p>
-                    <p>Url: {modalData.url}</p>
-                    <p>Estatísticas de Commits: {modalData.defaultBranchRef.target.history.edges.map(edge => (
-                        <li key={edge.node.changedFiles}>
-                            {`${edge.node.changedFiles} arquivos alterados, ${edge.node.additions} adições, ${edge.node.deletions} deleções`}
-                        </li>
-                    ))}
-                    </p>
-                    <p>Últimas 3 Issues:
-                        {modalData.issues.edges.map(edge => (
-                            <li key={edge.node.number}>
-                                {`${edge.node.number}: ${edge.node.title}`}
-                            </li>
-                        ))}
-                    </p>
-                    <p>Pull Requests: {modalData.CommitHistoryConnection}</p>
-                </ModalContent>
-            </ModalBackdrop>
-        )
-    );
+  return (
+    modalVisible && (
+      <ModalBackdrop>
+        <ModalContent>
+          <CloseButton onClick={handleToggleModal}>Fechar</CloseButton>
+          {/* Aqui você pode renderizar o conteúdo do modal usando os dados recebidos do estado */}
+          <TitleBackground>
+            <Title>Detalhes do Repositório</Title>
+          </TitleBackground>
+          <p>
+            <TituloNegrito>Nome:</TituloNegrito>
+            <StyledLink href={modalData.url} target="_blank">
+              {modalData.name}
+            </StyledLink>
+          </p>
+          <p>
+            <TituloNegrito>Proprietário:</TituloNegrito> {modalData.owner.login}
+          </p>
+          <p>
+            <TituloNegrito>Descrição:</TituloNegrito> {modalData.description}
+          </p>
+          <p>
+            <TituloNegrito>Contagem de estrelas:</TituloNegrito>{" "}
+            {modalData.stargazerCount}
+          </p>
+          <p>
+            <TituloNegrito>Estatísticas de Commits:</TituloNegrito>{" "}
+            {modalData.defaultBranchRef.target.history.edges.map((edge) => (
+              <li key={edge.node.changedFiles}>
+                {`${edge.node.changedFiles} arquivos alterados, ${edge.node.additions} adições, ${edge.node.deletions} deleções`}
+              </li>
+            ))}
+          </p>
+          <p>
+            <TituloNegrito>Últimas 3 Issues:</TituloNegrito>
+            {modalData.issues.edges.map((edge) => (
+              <li key={edge.node.number}>
+                {`${edge.node.number}: ${edge.node.title}`}
+              </li>
+            ))}
+          </p>
+          <p>
+            <TituloNegrito>Últimos 3 Pull Requests:</TituloNegrito>
+            {modalData.pullRequests.edges.map((edge) => (
+              <li key={edge.node.url}>
+                <StyledLink
+                  href={edge.node.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {edge.node.title}
+                </StyledLink>
+                <li>Autor: {edge.node.author.login}</li>
+                <li>
+                  Criado em: {new Date(edge.node.createdAt).toLocaleString()}
+                </li>
+                <p></p>
+              </li>
+            ))}
+          </p>
+        </ModalContent>
+      </ModalBackdrop>
+    )
+  );
 };
 
 export default Modal;
