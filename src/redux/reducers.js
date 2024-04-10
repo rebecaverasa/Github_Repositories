@@ -1,4 +1,5 @@
-import { SET_REPOSITORIES, TOGGLE_MODAL } from "./actions";
+/* eslint-disable no-case-declarations */
+import { SET_REPOSITORIES, TOGGLE_MODAL, TOGGLE_REMOVE } from "./actions";
 
 const initialState = {
   repositories: [],
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
         modalVisible: !state.modalVisible,
         modalData: action.payload,
       };
+      case TOGGLE_REMOVE:
+        return {
+          ...state,
+          repositories: state.repositories.filter(item =>  item.name !== action.payload.name),
+        }
     default:
       return state;
   }

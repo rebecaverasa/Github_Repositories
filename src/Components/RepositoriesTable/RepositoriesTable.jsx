@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "../../redux/actions";
+import { remove, toggleModal } from "../../redux/actions";
 
 const TableContainer = styled.div`
   padding: 0 200px;
@@ -69,6 +69,29 @@ const Button = styled.button`
     }
 `;
 
+const ActionContainer = styled.div`
+    display: flex;
+    background-color: #000;
+`;
+
+const ButtonActions = styled.button`
+    background-color: #6272A4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    &:hover {
+        background-color: #F1FA8C;
+        color: black;
+    }
+`;
+
 const PageSize = 10;
 
 const RepositoriesTable = () => {
@@ -91,6 +114,10 @@ const RepositoriesTable = () => {
         currentPage * PageSize
     );
 
+    const removeRow = (data) => {
+        dispatch(remove(data));
+    };
+
     return (
         <TableContainer>
             <Table>
@@ -99,6 +126,7 @@ const RepositoriesTable = () => {
                         <TableHeader>Nome do Repositorio</TableHeader>
                         <TableHeader>Nome do Proprietário</TableHeader>
                         <TableHeader>Descrição</TableHeader>
+                        <TableHeader>Ações</TableHeader>
                     </TableRow>
                 </TableHead>
                 <tbody>
@@ -106,11 +134,16 @@ const RepositoriesTable = () => {
                         paginatedData.map((repo) => (
                             <TableRowClickable
                                 key={repo.name}
-                                onClick={() => handleRowClick(repo)}
                             >
                                 <TableCell>{repo.name}</TableCell>
                                 <TableCell>{repo.owner.login}</TableCell>
                                 <TableCell>{repo.description}</TableCell>
+                                <TableCell>
+                                    <ActionContainer>
+                                        <ButtonActions onClick={() => handleRowClick(repo)}>Detalhes</ButtonActions>
+                                        <ButtonActions onClick={() => removeRow(repo)}>Remover</ButtonActions>
+                                    </ActionContainer>
+                                </TableCell>
                             </TableRowClickable>
                         ))
                     ) : (
